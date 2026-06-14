@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Project Detail — Babalu Andhale</title>
+  <meta name="description" id="page-desc" content="Detailed case study of a project built by Babalu Andhale, Senior Laravel Developer." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins','sans-serif'] } } } }</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="bg-[#08081a] text-slate-100">
+  <div id="navbar-placeholder"></div>
+
+  <!-- Dynamic content injected by JS -->
+  <div id="project-content"></div>
+
+  <div id="footer-placeholder"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/SplashCursor.js"></script>
+  <script>
+/* ── Project Data ─────────────────────────────────────────── */
+const PROJECTS = {
+  'insurance-crm': {
+    title: 'Insurance CRM System',
+    subtitle: 'Enterprise policy management & agent CRM',
+    category: 'CRM · SaaS',
+    year: '2023',
+    duration: '8 months',
+    team: '6 developers',
+    gradientFrom: '#1e1040',
+    gradientTo: '#2d1b69',
+    icon: 'fas fa-shield-alt',
+    iconColor: 'rgba(167,139,250,0.9)',
+    problem: `Insurance agencies were managing policies via spreadsheets and siloed tools, leading to missed follow-ups, poor agent productivity, and zero visibility into the sales pipeline. The client needed a unified CRM that would handle the full policy lifecycle — from lead generation to renewal reminders.`,
+    solution: `We designed a multi-module Laravel monolith with a React frontend, structured around a Domain-Driven Design approach. Key decisions included an event-sourced audit trail for regulatory compliance, a queue-driven notification engine for multi-channel communication, and Redis-backed real-time dashboards for agent performance.`,
+    features: [
+      'Policy lifecycle management (quote → issue → renewal)',
+      'Lead capture with multi-source attribution tracking',
+      'Automated follow-up sequences via Email, SMS & WhatsApp',
+      'Agent performance dashboards with real-time KPIs',
+      'Razorpay integration for premium collection',
+      'Role-based access: Admin, Manager, Agent, Customer',
+      'Document vault for policy documents & KYC',
+      'Mobile-responsive React frontend with PWA support'
+    ],
+    tech: ['Laravel 11', 'PHP 8.2', 'React 18', 'MySQL 8', 'Redis', 'Razorpay', 'Laravel Queues', 'Pusher', 'Nginx', 'Docker', 'AWS S3'],
+    results: [
+      { metric: '40%', label: 'Increase in agent productivity' },
+      { metric: '65%', label: 'Reduction in missed follow-ups' },
+      { metric: '10K+', label: 'Daily transactions processed' },
+      { metric: '99.9%', label: 'System uptime maintained' }
+    ]
+  },
+  'saas-platform': {
+    title: 'Multi-Tenant SaaS Platform',
+    subtitle: 'White-label platform with full tenant isolation',
+    category: 'SaaS · Multi-Tenant',
+    year: '2022',
+    duration: '12 months',
+    team: '8 developers',
+    gradientFrom: '#051f40',
+    gradientTo: '#0c3a6e',
+    icon: 'fas fa-cloud',
+    iconColor: 'rgba(6,182,212,0.9)',
+    problem: `The client had a successful B2B product but customers were demanding a white-label version they could brand as their own. A naive multi-database approach was too expensive operationally. They needed scalable multi-tenancy with strict data isolation that could grow to tens of thousands of tenants without proportional infrastructure cost.`,
+    solution: `Implemented a hybrid multi-tenancy strategy using tenant-scoped databases for premium tiers and schema-based isolation for standard tiers. Built a custom subdomain router that resolves the tenant context from the host header before any application logic runs. Stripe Billing handles subscription management with webhook-driven plan changes.`,
+    features: [
+      'Subdomain-based tenant routing (tenant.platform.com)',
+      'Hybrid database isolation (per-tenant DB for premium, schema for standard)',
+      'Custom RBAC with tenant-scoped permission inheritance',
+      'Stripe Billing with subscription management & invoicing',
+      'White-label branding: logo, colors, domain CNAME support',
+      'Per-tenant analytics dashboards and usage reporting',
+      'Automated tenant provisioning in < 30 seconds',
+      'Admin super-panel for cross-tenant management'
+    ],
+    tech: ['Laravel 10', 'PHP 8.1', 'Vue.js 3', 'PostgreSQL', 'Redis', 'Stripe', 'Docker', 'Kubernetes', 'GitHub Actions', 'Cloudflare'],
+    results: [
+      { metric: '50K+', label: 'Active tenants onboarded' },
+      { metric: '< 30s', label: 'Tenant provisioning time' },
+      { metric: '72%', label: 'Reduction in API latency' },
+      { metric: '99.99%', label: 'Billing accuracy maintained' }
+    ]
+  },
+  'channel-crm': {
+    title: 'Channel Partner CRM',
+    subtitle: 'Partner lifecycle management & commission automation',
+    category: 'CRM · Payments',
+    year: '2023',
+    duration: '6 months',
+    team: '5 developers',
+    gradientFrom: '#1a2505',
+    gradientTo: '#2d4a10',
+    icon: 'fas fa-handshake',
+    iconColor: 'rgba(74,222,128,0.9)',
+    problem: `Managing 1,200+ channel partners via Excel was creating commission disputes, delayed payouts, and partner churn. The business had no visibility into partner performance, and manual KYC verification was taking 5–7 business days per partner.`,
+    solution: `Built a dedicated partner portal with a white-labeled frontend and a Laravel backend. KYC was automated using document OCR and a rule-based verification engine. Commission calculations use a configurable tier engine, with PayPal Payouts API for automated bulk disbursements.`,
+    features: [
+      'Partner onboarding with automated KYC & document verification',
+      'Configurable commission tiers & product-based rates',
+      'Real-time performance dashboards for partners & admin',
+      'Automated monthly payouts via PayPal Payouts API',
+      'Training material library with completion tracking',
+      'Lead submission & deal registration workflow',
+      'Partner ranking & gamification leaderboard',
+      'Dispute management workflow for commission queries'
+    ],
+    tech: ['Laravel 10', 'React 18', 'MySQL 8', 'Redis', 'PayPal Payouts API', 'Laravel Nova', 'Nginx', 'Docker', 'AWS'],
+    results: [
+      { metric: '1,200+', label: 'Active partners managed' },
+      { metric: '35%', label: 'Reduction in partner churn' },
+      { metric: '< 2hrs', label: 'KYC processing time (was 5 days)' },
+      { metric: '₹50L+', label: 'Monthly commissions processed' }
+    ]
+  },
+  'shopify-middleware': {
+    title: 'Shopify Integration Middleware',
+    subtitle: 'Bi-directional sync between Shopify & custom ERP',
+    category: 'E-Commerce · Integration',
+    year: '2022',
+    duration: '4 months',
+    team: '3 developers',
+    gradientFrom: '#2a1505',
+    gradientTo: '#5a3000',
+    icon: 'fab fa-shopify',
+    iconColor: 'rgba(251,191,36,0.9)',
+    problem: `The client ran 3 Shopify stores and a custom ERP system. Inventory updates, order syncing, and product publishing were done manually by 4 staff — costing 20+ hours per week and causing overselling due to stock discrepancies.`,
+    solution: `Designed an event-driven middleware layer using Laravel's queue system. Shopify webhooks push events to the middleware, which applies transformation rules and propagates changes to the ERP. The reverse flow — ERP stock updates → Shopify — uses a scheduled sync with conflict resolution logic.`,
+    features: [
+      'Bi-directional product & inventory sync across 3 stores',
+      'Real-time order processing via Shopify webhooks',
+      'Idempotent webhook handling with deduplication',
+      'Conflict resolution for concurrent stock updates',
+      'Failed event replay with exponential backoff',
+      'Sync dashboard with error log and manual override',
+      'ERP → Shopify price & promotion synchronisation',
+      'Automated reconciliation reports (daily/weekly)'
+    ],
+    tech: ['Laravel 9', 'PHP 8.1', 'MySQL', 'Redis', 'Shopify Admin API', 'Laravel Queues', 'Horizon', 'WebSockets', 'Docker'],
+    results: [
+      { metric: '5K+', label: 'Orders processed daily' },
+      { metric: '20hrs', label: 'Weekly staff time saved' },
+      { metric: '0', label: 'Overselling incidents post-launch' },
+      { metric: '99.98%', label: 'Webhook processing success rate' }
+    ]
+  }
+};
+
+/* ── Render Project ─────────────────────────────────────── */
+function renderProject(id) {
+  const p = PROJECTS[id];
+  if (!p) {
+    document.getElementById('project-content').innerHTML = `
+      <div class="min-h-screen flex flex-col items-center justify-center text-center px-4" style="padding-top:72px">
+        <div class="text-6xl mb-6">🔍</div>
+        <h1 class="text-3xl font-bold text-white mb-4">Project Not Found</h1>
+        <p class="mb-8" style="color:var(--text-secondary)">The project you're looking for doesn't exist.</p>
+        <a href="projects.html" class="btn-primary"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+      </div>`;
+    return;
+  }
+
+  document.title = `${p.title} — Babalu Andhale`;
+  document.getElementById('page-desc').content = `Case study: ${p.title}. ${p.subtitle}`;
+
+  const featuresHTML = p.features.map(f => `
+    <li class="flex items-start gap-3">
+      <i class="fas fa-check-circle mt-0.5 flex-shrink-0" style="color:var(--color-success)"></i>
+      <span class="text-sm">${f}</span>
+    </li>`).join('');
+
+  const techHTML = p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('');
+
+  const resultsHTML = p.results.map(r => `
+    <div class="glass p-6 rounded-xl text-center stat-card">
+      <div class="text-3xl font-black gradient-text font-poppins mb-1">${r.metric}</div>
+      <p class="text-sm" style="color:var(--text-secondary)">${r.label}</p>
+    </div>`).join('');
+
+  document.getElementById('project-content').innerHTML = `
+    <!-- Hero Banner -->
+    <div class="page-hero" style="padding-top:72px; min-height:360px">
+      <div class="absolute inset-0" style="background:linear-gradient(135deg,${p.gradientFrom},${p.gradientTo}); opacity:0.7"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-24">
+        <div class="page-hero-content">
+          <a href="projects.html" class="inline-flex items-center gap-2 text-sm mb-6 transition-colors"
+             style="color:var(--text-muted);text-decoration:none">
+            <i class="fas fa-arrow-left"></i> Back to Projects
+          </a>
+          <div class="section-badge">${p.category}</div>
+          <h1 class="section-title mt-4 text-white text-4xl sm:text-5xl">${p.title}</h1>
+          <p class="mt-4 text-lg" style="color:var(--text-secondary)">${p.subtitle}</p>
+          <div class="flex flex-wrap gap-6 mt-6">
+            <div class="flex items-center gap-2 text-sm" style="color:var(--text-muted)">
+              <i class="fas fa-calendar" style="color:var(--color-primary-light)"></i> Year: <span class="text-white">${p.year}</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm" style="color:var(--text-muted)">
+              <i class="fas fa-clock" style="color:var(--color-accent)"></i> Duration: <span class="text-white">${p.duration}</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm" style="color:var(--text-muted)">
+              <i class="fas fa-users" style="color:var(--color-gold)"></i> Team: <span class="text-white">${p.team}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overview -->
+    <section class="py-20" style="background:var(--bg-primary)">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- Hero visual -->
+          <div class="flex items-center justify-center" data-aos="fade-right">
+            <div class="w-72 h-72 rounded-3xl flex items-center justify-center"
+                 style="background:linear-gradient(135deg,${p.gradientFrom},${p.gradientTo}); box-shadow: var(--shadow-primary)">
+              <div class="text-center">
+                <i class="${p.icon} text-7xl mb-4" style="color:${p.iconColor}"></i>
+                <p class="text-white font-semibold text-lg font-poppins">${p.title}</p>
+              </div>
+            </div>
+          </div>
+          <!-- Problem -->
+          <div data-aos="fade-left">
+            <div class="section-badge"><i class="fas fa-question-circle"></i> Problem Statement</div>
+            <h2 class="section-title mt-4 mb-6">The <span class="gradient-text">Challenge</span></h2>
+            <p class="text-base leading-relaxed" style="color:var(--text-secondary)">${p.problem}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solution Architecture -->
+    <section class="py-20" style="background:var(--bg-secondary)">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 section-reveal">
+          <div class="section-badge mx-auto"><i class="fas fa-drafting-compass"></i> Architecture</div>
+          <h2 class="section-title mt-4">Solution <span class="gradient-text">Architecture</span></h2>
+        </div>
+        <div class="glass p-8 rounded-2xl" data-aos="fade-up">
+          <p class="text-base leading-relaxed mb-6" style="color:var(--text-secondary)">${p.solution}</p>
+          <div>
+            <h3 class="font-semibold text-white mb-4">Technology Stack</h3>
+            <div class="flex flex-wrap gap-2">${techHTML}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="py-20" style="background:var(--bg-primary)">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 section-reveal">
+          <div class="section-badge mx-auto"><i class="fas fa-list-check"></i> Features</div>
+          <h2 class="section-title mt-4">Key <span class="gradient-text">Features</span></h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto cards-reveal">
+          ${p.features.map((f, i) => `
+          <div class="glass p-4 rounded-xl flex items-start gap-3" data-card data-aos="fade-up" data-aos-delay="${i * 40}">
+            <i class="fas fa-check-circle mt-1 flex-shrink-0" style="color:var(--color-success)"></i>
+            <span class="text-sm" style="color:var(--text-secondary)">${f}</span>
+          </div>`).join('')}
+        </div>
+      </div>
+    </section>
+
+    <!-- Results & Metrics -->
+    <section class="py-20" style="background:var(--bg-secondary)">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 section-reveal">
+          <div class="section-badge mx-auto"><i class="fas fa-chart-line"></i> Results</div>
+          <h2 class="section-title mt-4">Results & <span class="gradient-text">Metrics</span></h2>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          ${resultsHTML}
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshots Gallery -->
+    <section class="py-20" style="background:var(--bg-primary)">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 section-reveal">
+          <div class="section-badge mx-auto"><i class="fas fa-images"></i> Gallery</div>
+          <h2 class="section-title mt-4">Screenshot <span class="gradient-text">Gallery</span></h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          ${['Dashboard', 'Analytics', 'Settings', 'Reports', 'Mobile View', 'Admin Panel'].map((label, i) => `
+          <div class="glass rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="${i*60}">
+            <div class="h-44 flex items-center justify-center"
+                 style="background:linear-gradient(135deg,${p.gradientFrom},${p.gradientTo})">
+              <div class="text-center">
+                <i class="fas fa-desktop text-3xl mb-2" style="color:rgba(255,255,255,0.4)"></i>
+                <p class="text-xs text-white opacity-70">${label}</p>
+              </div>
+            </div>
+            <div class="p-3">
+              <p class="text-xs font-medium" style="color:var(--text-muted)">${label} View</p>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Projects -->
+    <section class="py-20" style="background:var(--bg-secondary)">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 section-reveal">
+          <div class="section-badge mx-auto"><i class="fas fa-th-large"></i> Related Work</div>
+          <h2 class="section-title mt-4">Related <span class="gradient-text">Projects</span></h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          ${Object.entries(PROJECTS).filter(([k]) => k !== id).slice(0,3).map(([k, rp]) => `
+          <a href="project-detail.html?id=${k}" class="project-card glass rounded-xl overflow-hidden block" style="text-decoration:none">
+            <div class="h-32 flex items-center justify-center"
+                 style="background:linear-gradient(135deg,${rp.gradientFrom},${rp.gradientTo})">
+              <i class="${rp.icon} text-3xl" style="color:${rp.iconColor}"></i>
+            </div>
+            <div class="p-4">
+              <h3 class="font-bold text-white mb-1">${rp.title}</h3>
+              <p class="text-xs" style="color:var(--text-secondary)">${rp.subtitle}</p>
+            </div>
+          </a>`).join('')}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section py-20" style="background:linear-gradient(135deg,#0d0d2e,#1a0533)">
+      <div class="max-w-3xl mx-auto px-4 text-center relative z-10">
+        <h2 class="section-title mb-4">Want Something <span class="gradient-text">Similar</span>?</h2>
+        <p class="mb-8 text-lg" style="color:var(--text-secondary)">Let's discuss your project requirements.</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="contact.html" class="btn-primary"><i class="fas fa-envelope"></i> Start a Project</a>
+          <a href="projects.html" class="btn-outline"><i class="fas fa-arrow-left"></i> All Projects</a>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ── Init ─────────────────────────────────────────────────── */
+const params = new URLSearchParams(window.location.search);
+const projectId = params.get('id') || 'insurance-crm';
+renderProject(projectId);
+  </script>
+</body>
+</html>
