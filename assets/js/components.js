@@ -55,16 +55,16 @@ function getNavbarHTML() {
         </a>
 
         <!-- Desktop Nav -->
-        <div class="hidden lg:flex items-center gap-7">
+        <div class="hidden xl:flex items-center gap-5">
           ${navLinks}
         </div>
 
         <!-- CTA + Hamburger -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
           <a href="${r}contact.html" class="btn-primary btn-sm hidden md:inline-flex">
             <i class="fas fa-envelope"></i> Hire Me
           </a>
-          <button class="hamburger lg:hidden" id="hamburger-btn" aria-label="Toggle menu">
+          <button class="hamburger xl:hidden" id="hamburger-btn" aria-label="Toggle menu">
             <span></span><span></span><span></span>
           </button>
         </div>

@@ -23,8 +23,9 @@ window.addEventListener('load', function () {
   }
 
   /* ── Loading Screen Exit ──────────────────────────────────── */
+  /* Only auto-fade if NOT managed by a page-level script (e.g. typing animation) */
   const loadingScreen = document.getElementById('loading-screen');
-  if (loadingScreen) {
+  if (loadingScreen && !loadingScreen.hasAttribute('data-managed')) {
     gsap.to(loadingScreen, {
       opacity: 0,
       duration: 0.6,
@@ -43,7 +44,9 @@ window.addEventListener('load', function () {
   const heroStats   = document.querySelectorAll('.hero-stat');
 
   if (heroTitle) {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    /* clearProps removes all inline styles GSAP set once animation ends,
+       so no stale opacity/transform values can conflict with CSS transitions later */
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out', clearProps: 'all' } });
 
     if (heroBadge)  tl.from(heroBadge,  { y: 30, opacity: 0, duration: 0.6 });
     if (heroTitle)  tl.from(heroTitle,  { y: 60, opacity: 0, duration: 0.8 }, '-=0.2');
@@ -56,11 +59,8 @@ window.addEventListener('load', function () {
     }
   }
 
-  /* ── Navbar Entrance ──────────────────────────────────────── */
-  const navbar = document.getElementById('main-navbar');
-  if (navbar) {
-    gsap.from(navbar, { y: -80, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 });
-  }
+  /* Navbar is always visible — no entrance animation needed.
+     (Loading screen masks it on homepage; sub-pages show it immediately.) */
 
   /* ── Page Hero (sub-pages) ────────────────────────────────── */
   const pageHeroContent = document.querySelector('.page-hero-content');
@@ -73,9 +73,15 @@ window.addEventListener('load', function () {
     });
   }
 
-  /* ── Section Title Reveal ─────────────────────────────────── */
+  /* ── Scroll-triggered animations ─────────────────────────── */
+  /* NOTE: immediateRender:false on all scroll-triggered gsap.from() calls so
+     elements remain visible at page load and only animate when their trigger
+     fires — prevents the "content invisible" bug caused by GSAP pre-setting
+     opacity:0 before the ScrollTrigger threshold is ever crossed. */
+
   if (typeof ScrollTrigger !== 'undefined') {
 
+    /* ── Section Title Reveal ─────────────────────────────────── */
     gsap.utils.toArray('.section-reveal').forEach(section => {
       const badge = section.querySelector('.section-badge');
       const title = section.querySelector('.section-title');
@@ -85,8 +91,9 @@ window.addEventListener('load', function () {
       if (!els.length) return;
 
       gsap.from(els, {
-        scrollTrigger: { trigger: section, start: 'top 80%', once: true },
+        scrollTrigger: { trigger: section, start: 'top 85%', once: true },
         y: 50, opacity: 0,
+        immediateRender: false,
         stagger: 0.15, duration: 0.8, ease: 'power3.out'
       });
     });
@@ -96,18 +103,22 @@ window.addEventListener('load', function () {
       const cards = container.querySelectorAll('[data-card]');
       if (!cards.length) return;
       gsap.from(cards, {
-        scrollTrigger: { trigger: container, start: 'top 75%', once: true },
+        scrollTrigger: { trigger: container, start: 'top 88%', once: true },
         y: 60, opacity: 0,
+        immediateRender: false,
         stagger: 0.1, duration: 0.7, ease: 'power3.out'
       });
     });
 
     /* ── Timeline Items ─────────────────────────────────────── */
+    /* Skip items that AOS is already handling (data-aos present) */
     gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+      if (item.hasAttribute('data-aos')) return;
       gsap.from(item, {
-        scrollTrigger: { trigger: item, start: 'top 82%', once: true },
+        scrollTrigger: { trigger: item, start: 'top 88%', once: true },
         x: i % 2 === 0 ? -60 : 60,
         opacity: 0,
+        immediateRender: false,
         duration: 0.8, ease: 'power3.out'
       });
     });
@@ -115,8 +126,9 @@ window.addEventListener('load', function () {
     /* ── Stat Counter Cards ─────────────────────────────────── */
     gsap.utils.toArray('.stat-card').forEach((card, i) => {
       gsap.from(card, {
-        scrollTrigger: { trigger: card, start: 'top 85%', once: true },
+        scrollTrigger: { trigger: card, start: 'top 90%', once: true },
         y: 40, opacity: 0,
+        immediateRender: false,
         duration: 0.6, delay: i * 0.1, ease: 'power3.out'
       });
     });
@@ -124,17 +136,19 @@ window.addEventListener('load', function () {
     /* ── Skill Category Reveal ──────────────────────────────── */
     gsap.utils.toArray('.skill-category').forEach(cat => {
       gsap.from(cat, {
-        scrollTrigger: { trigger: cat, start: 'top 80%', once: true },
+        scrollTrigger: { trigger: cat, start: 'top 85%', once: true },
         y: 40, opacity: 0,
+        immediateRender: false,
         duration: 0.7, ease: 'power3.out'
       });
     });
 
     /* ── Generic fade-up for .gsap-fade-up ─────────────────── */
-    gsap.utils.toArray('.gsap-fade-up').forEach((el, i) => {
+    gsap.utils.toArray('.gsap-fade-up').forEach((el) => {
       gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
         y: 40, opacity: 0,
+        immediateRender: false,
         duration: 0.7, delay: (el.dataset.delay || 0) / 1000,
         ease: 'power3.out'
       });
@@ -160,8 +174,9 @@ window.addEventListener('load', function () {
     const serviceGrid = document.querySelector('.service-grid');
     if (serviceGrid) {
       gsap.from(serviceGrid.querySelectorAll('.service-card'), {
-        scrollTrigger: { trigger: serviceGrid, start: 'top 75%', once: true },
+        scrollTrigger: { trigger: serviceGrid, start: 'top 85%', once: true },
         y: 50, opacity: 0,
+        immediateRender: false,
         stagger: 0.08, duration: 0.7, ease: 'power3.out'
       });
     }
@@ -170,8 +185,9 @@ window.addEventListener('load', function () {
     const processRow = document.querySelector('.process-row');
     if (processRow) {
       gsap.from(processRow.querySelectorAll('.process-step'), {
-        scrollTrigger: { trigger: processRow, start: 'top 78%', once: true },
+        scrollTrigger: { trigger: processRow, start: 'top 85%', once: true },
         y: 50, opacity: 0, scale: 0.95,
+        immediateRender: false,
         stagger: 0.12, duration: 0.7, ease: 'back.out(1.7)'
       });
     }
@@ -179,8 +195,9 @@ window.addEventListener('load', function () {
     /* ── Testimonial Cards ──────────────────────────────────── */
     gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
       gsap.from(card, {
-        scrollTrigger: { trigger: card, start: 'top 82%', once: true },
+        scrollTrigger: { trigger: card, start: 'top 88%', once: true },
         y: 40, opacity: 0,
+        immediateRender: false,
         duration: 0.7, delay: i * 0.1, ease: 'power3.out'
       });
     });
@@ -189,11 +206,15 @@ window.addEventListener('load', function () {
     const ctaSection = document.querySelector('.cta-section');
     if (ctaSection) {
       gsap.from(ctaSection.querySelectorAll('*'), {
-        scrollTrigger: { trigger: ctaSection, start: 'top 80%', once: true },
+        scrollTrigger: { trigger: ctaSection, start: 'top 85%', once: true },
         y: 40, opacity: 0,
+        immediateRender: false,
         stagger: 0.1, duration: 0.7, ease: 'power3.out'
       });
     }
+
+    /* Recalculate trigger positions after everything renders */
+    ScrollTrigger.refresh();
 
   } // end ScrollTrigger block
 
