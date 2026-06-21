@@ -94,6 +94,20 @@
     .fs-api.fs-paused     { border-color:rgba(139,92,246,0.75);  box-shadow:0 0 28px rgba(139,92,246,0.5); }
     .fs-vue.fs-paused     { border-color:rgba(74,222,128,0.75);  box-shadow:0 0 28px rgba(74,222,128,0.5); }
 
+    /* Hide floating icons on small phones — they clutter the layout */
+    @media (max-width: 639px) { .float-skill { display: none !important; } }
+
+    /* Responsive profile photo */
+    .hero-photo {
+      width: clamp(180px, 55vw, 290px);
+      height: clamp(180px, 55vw, 290px);
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border: 4px solid #08081a;
+    }
+
     /* Tooltip */
     .float-skill::after {
       content: attr(data-tip);
@@ -123,47 +137,34 @@
 
   <!-- VS Code Loading Screen -->
   <div id="loading-screen" data-managed>
-    <div class="vsc-window">
-      <!-- Title bar -->
-      <div class="vsc-titlebar">
-        <div class="vsc-dots">
-          <span class="vsc-dot vsc-close"></span>
-          <span class="vsc-dot vsc-min"></span>
-          <span class="vsc-dot vsc-max"></span>
-        </div>
-        <span class="vsc-title">PolicyController.php — RiseLinx CRM</span>
-        <div style="width:50px;flex-shrink:0"></div>
+    <div class="pl-card">
+      <div class="pl-avatar-ring">
+        <div class="pl-avatar">BA</div>
       </div>
-      <!-- Tab bar -->
-      <div class="vsc-tabs">
-        <div class="vsc-tab">
-          <span class="vsc-tab-badge">PHP</span>
-          PolicyController.php
+      <h1 class="pl-name">Babalu Andhale</h1>
+      <p class="pl-role">Senior Laravel Developer &amp; Full Stack Engineer</p>
+      <div class="pl-divider"></div>
+      <div class="pl-stats">
+        <div class="pl-stat">
+          <span class="pl-stat-val">5+</span>
+          <span class="pl-stat-lbl">Years</span>
         </div>
-      </div>
-      <!-- Editor -->
-      <div class="vsc-editor">
-        <div class="vsc-gutter" id="vsc-gutter"></div>
-        <div class="vsc-code-area">
-          <div id="vsc-code"></div>
+        <div class="pl-stat-sep"></div>
+        <div class="pl-stat">
+          <span class="pl-stat-val">20+</span>
+          <span class="pl-stat-lbl">Projects</span>
+        </div>
+        <div class="pl-stat-sep"></div>
+        <div class="pl-stat">
+          <span class="pl-stat-val">3</span>
+          <span class="pl-stat-lbl">SaaS Platforms</span>
         </div>
       </div>
-      <!-- Status bar -->
-      <div class="vsc-statusbar">
-        <span>&#10005; 0 &nbsp;&#9651; 0</span>
-        <span>&#8981; main</span>
-        <div class="vsc-sb-right">
-          <span>PHP</span>
-          <span>UTF-8</span>
-          <span id="vsc-pos">Ln 1, Col 1</span>
-        </div>
+      <p class="pl-tagline"><span id="pl-typed"></span><span class="pl-cursor">|</span></p>
+      <div class="pl-progress-wrap">
+        <div class="pl-progress-bar" id="pl-progress"></div>
       </div>
     </div>
-    <!-- Progress line -->
-    <div class="vsc-progress-wrap">
-      <div class="vsc-progress-bar" id="vsc-progress"></div>
-    </div>
-    <p class="vsc-name-tag">babalu.andhale &mdash; portfolio</p>
   </div>
 
   <!-- Navbar -->
@@ -229,7 +230,7 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10
-                flex flex-col lg:flex-row items-center gap-12 py-24 lg:py-32">
+                flex flex-col lg:flex-row items-center gap-8 lg:gap-14 py-14 sm:py-20 lg:py-28">
 
       <!-- Left: Text Content -->
       <div class="flex-1 text-center lg:text-left">
@@ -248,7 +249,7 @@
           <span id="typing-text" class="text-xl font-bold text-purple-400 typing-cursor"></span>
         </div>
 
-        <p class="hero-desc text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-10"
+        <p class="hero-desc text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-7 sm:mb-10"
            style="color: var(--text-secondary)">
           Building Scalable <strong class="text-white">SaaS Platforms</strong>, CRM Systems &
           High-Performance <strong class="text-white">Laravel Applications</strong> with 2+ years of experience
@@ -262,13 +263,13 @@
           <a href="contact.html" class="btn-outline">
             <i class="fas fa-envelope"></i> Hire Me
           </a>
-          <a href="#" download onclick="alert('Attach your resume PDF here')" class="btn-outline">
-            <i class="fas fa-download"></i> Download Resume
+          <a href="experience.html" class="btn-outline">
+            <i class="fas fa-file-alt"></i> View Resume
           </a>
         </div>
 
         <!-- Quick stats row -->
-        <div class="hero-stats flex flex-wrap justify-center lg:justify-start gap-8 mt-12">
+        <div class="hero-stats flex flex-wrap justify-center lg:justify-start gap-6 mt-8 sm:mt-10">
           <div class="hero-stat text-center">
             <p class="text-3xl font-black gradient-text font-poppins">2+</p>
             <p class="text-xs uppercase tracking-widest mt-1" style="color: var(--text-muted)">Years Exp.</p>
@@ -298,7 +299,7 @@
           <div style="display:inline-block;padding:4px;border-radius:50%;background:var(--gradient-primary);animation:photoGlow 3s ease-in-out infinite;">
             <img src="assets/images/babalu-profile.jpg"
                  alt="Babalu Andhale — Senior Laravel Developer"
-                 style="width:290px;height:290px;border-radius:50%;object-fit:cover;object-position:top center;display:block;border:4px solid #08081a;" />
+                 class="hero-photo" />
           </div>
           <!-- Name chip below photo -->
           <div class="glass mt-5 inline-flex flex-col items-center px-6 py-3 rounded-2xl"
@@ -563,7 +564,7 @@
         </h2>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 cards-reveal">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
         <div class="glass p-5 rounded-xl text-center hover:scale-105 transition-transform duration-300 cursor-default" data-card data-aos="fade-up" data-aos-delay="0">
           <div class="text-3xl mb-2">🔴</div>
           <p class="font-semibold text-sm text-white">Laravel 11</p>
@@ -915,7 +916,7 @@
   })();
   </script>
 
-  <!-- ── VS Code loading screen: character-by-character typing ── -->
+  <!-- ── About me loader: typewriter tagline + progress ── -->
   <script>
   (function () {
     'use strict';
@@ -923,162 +924,78 @@
     var loader  = document.getElementById('loading-screen');
     if (!loader) return;
 
-    var codeEl   = document.getElementById('vsc-code');
-    var gutterEl = document.getElementById('vsc-gutter');
-    var posEl    = document.getElementById('vsc-pos');
-    var progEl   = document.getElementById('vsc-progress');
+    var typedEl = document.getElementById('pl-typed');
+    var progEl  = document.getElementById('pl-progress');
 
-    /* PHP controller relevant to Babalu's Insurance CRM work at RiseLinx */
-    var LINES = [
-      '<?php',
-      '',
-      'namespace App\\Http\\Controllers;',
-      '',
-      'use App\\Models\\Policy;',
-      'use Illuminate\\Http\\Request;',
-      '',
-      'class PolicyController extends Controller',
-      '{',
-      '    public function store(Request $request)',
-      '    {',
-      "        $policy = Policy::create([",
-      "            'agent_id' => auth()->id(),",
-      "            'status'   => 'active',",
-      '        ]);',
-      '',
-      '        return response()->json($policy, 201);',
-      '    }',
-      '}',
+    var PHRASES = [
+      'Laravel · PHP · Docker · MySQL · Redis',
+      'Building scalable SaaS & CRM platforms',
+      'Clean code. Solid architecture. Real results.'
     ];
 
-    var TOTAL = LINES.reduce(function (s, l) { return s + l.length; }, 0);
-    var lineIdx = 0, charIdx = 0;
-    var pageLoaded = false, typingDone = false;
+    var pIdx = 0, cIdx = 0, deleting = false;
+    var pageLoaded = false, animDone = false;
 
     if (document.readyState === 'complete') { pageLoaded = true; }
     else { window.addEventListener('load', function () { pageLoaded = true; tryFade(); }); }
 
-    /* ── HTML escape ── */
-    function esc(t) {
-      return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
+    /* ── Smooth progress fill ── */
+    var progress = 0;
+    var progTimer = setInterval(function () {
+      progress = Math.min(progress + (Math.random() * 2.5 + 1), 88);
+      if (progEl) progEl.style.width = progress + '%';
+    }, 140);
 
-    /* ── Syntax highlight a completed plain-text line ── */
-    function hl(raw) {
-      var s = esc(raw);
-      if (!s.trim()) return s;
-
-      if (s.trim() === '&lt;?php')
-        return '<span class="c-tag">&lt;?php</span>';
-
-      if (/^\s*\/\//.test(s))
-        return '<span class="c-comment">' + s + '</span>';
-
-      if (/^\s*namespace\b/.test(s))
-        return s.replace(/\b(namespace)\b/, '<span class="c-keyword">$1</span>')
-                .replace(/([A-Z][\w\\]+)(?=;)/, '<span class="c-class">$1</span>');
-
-      if (/^\s*use\b/.test(s))
-        return s.replace(/\b(use)\b/, '<span class="c-keyword">$1</span>')
-                .replace(/([A-Z][\w\\]+)(?=;)/, '<span class="c-class">$1</span>');
-
-      if (/^\s*class\b/.test(s))
-        return s.replace(/\b(class)\b/, '<span class="c-keyword">$1</span>')
-                .replace(/\b(PolicyController)\b/, '<span class="c-class">$1</span>')
-                .replace(/\b(extends)\b/, '<span class="c-keyword">$1</span>')
-                .replace(/\b(Controller)\b/, '<span class="c-class">$1</span>');
-
-      if (/\bpublic\b/.test(s))
-        return s.replace(/\b(public)\b/, '<span class="c-keyword">$1</span>')
-                .replace(/\b(function)\b/, '<span class="c-keyword">$1</span>')
-                .replace(/\b(store)\b/, '<span class="c-fn">$1</span>')
-                .replace(/\b(Request)\b/, '<span class="c-class">$1</span>')
-                .replace(/(\$\w+)/g, '<span class="c-var">$1</span>');
-
-      if (/\breturn\b/.test(s)) {
-        s = s.replace(/\b(return)\b/, '<span class="c-keyword">$1</span>');
-        s = s.replace(/\b([a-z_]\w*)(?=\()/g, '<span class="c-method">$1</span>');
-        s = s.replace(/(\$\w+)/g, '<span class="c-var">$1</span>');
-        s = s.replace(/\b(\d+)\b/g, '<span class="c-num">$1</span>');
-        return s;
-      }
-
-      /* generic lines: strings → vars → arrows → methods → numbers */
-      s = s.replace(/('[^']*')/g, '<span class="c-string">$1</span>');
-      s = s.replace(/(\$\w+)/g, '<span class="c-var">$1</span>');
-      s = s.replace(/(=&gt;|-&gt;)/g, '<span class="c-arrow">$1</span>');
-      s = s.replace(/\b([a-z_]\w*)(?=\()/g, '<span class="c-method">$1</span>');
-      s = s.replace(/\b(\d+)\b/g, '<span class="c-num">$1</span>');
-      return s;
-    }
-
-    /* ── Create a new code line + gutter entry ── */
-    var lineEls = [];
-    function addLine(idx) {
-      var d = document.createElement('div');
-      d.className = 'vsc-line';
-      codeEl.appendChild(d);
-      lineEls.push(d);
-
-      var g = document.createElement('span');
-      g.className = 'vsc-gn' + (idx === lineIdx ? ' active-ln' : '');
-      g.id = 'vsc-gn-' + idx;
-      g.textContent = idx + 1;
-      gutterEl.appendChild(g);
-    }
-
-    addLine(0); /* seed first line */
-
-    /* ── Type one character ── */
-    function typeChar() {
-      var line = LINES[lineIdx];
-
-      if (charIdx < line.length) {
-        charIdx++;
-        lineEls[lineIdx].innerHTML = esc(line.slice(0, charIdx)) + '<span class="vsc-cursor"></span>';
-        if (posEl) posEl.textContent = 'Ln ' + (lineIdx + 1) + ', Col ' + (charIdx + 1);
-        if (progEl) {
-          var typed = LINES.slice(0, lineIdx).reduce(function (s, l) { return s + l.length; }, 0) + charIdx;
-          progEl.style.width = (typed / TOTAL * 90) + '%';
+    /* ── Typewriter loop ── */
+    function typeLoop() {
+      var phrase = PHRASES[pIdx];
+      if (!deleting) {
+        cIdx++;
+        if (typedEl) typedEl.textContent = phrase.slice(0, cIdx);
+        if (cIdx === phrase.length) {
+          /* last phrase — hold then mark done */
+          if (pIdx === PHRASES.length - 1) {
+            setTimeout(function () {
+              animDone = true;
+              clearInterval(progTimer);
+              if (progEl) progEl.style.width = '100%';
+              tryFade();
+            }, 900);
+            return;
+          }
+          setTimeout(function () { deleting = true; typeLoop(); }, 1000);
+          return;
         }
-        setTimeout(typeChar, 9 + Math.random() * 16);
+        setTimeout(typeLoop, 55 + Math.random() * 35);
       } else {
-        /* line complete — apply highlighting */
-        lineEls[lineIdx].innerHTML = hl(line);
-        var gn = document.getElementById('vsc-gn-' + lineIdx);
-        if (gn) gn.classList.remove('active-ln');
-
-        lineIdx++;
-        charIdx = 0;
-
-        if (lineIdx < LINES.length) {
-          addLine(lineIdx);
-          var gnNext = document.getElementById('vsc-gn-' + lineIdx);
-          if (gnNext) gnNext.classList.add('active-ln');
-          setTimeout(typeChar, line.length === 0 ? 90 : 22);
+        cIdx--;
+        if (typedEl) typedEl.textContent = phrase.slice(0, cIdx);
+        if (cIdx === 0) {
+          deleting = false;
+          pIdx++;
+          setTimeout(typeLoop, 280);
         } else {
-          typingDone = true;
-          tryFade();
+          setTimeout(typeLoop, 28);
         }
       }
     }
 
-    /* ── Fade out when typing done AND page loaded ── */
+    /* ── Fade out when animation done AND page loaded ── */
     function tryFade() {
-      if (!typingDone || !pageLoaded) return;
-      if (progEl) progEl.style.width = '100%';
+      if (!animDone || !pageLoaded) return;
       setTimeout(function () {
+        loader.style.pointerEvents = 'none';
         loader.style.transition = 'opacity 0.65s ease';
         loader.style.opacity = '0';
         setTimeout(function () { if (loader.parentNode) loader.remove(); }, 700);
-      }, 480);
+      }, 350);
     }
 
     /* Start */
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () { setTimeout(typeChar, 120); });
+      document.addEventListener('DOMContentLoaded', function () { setTimeout(typeLoop, 750); });
     } else {
-      setTimeout(typeChar, 120);
+      setTimeout(typeLoop, 750);
     }
   })();
   </script>
